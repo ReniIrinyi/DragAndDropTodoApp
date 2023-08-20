@@ -1,0 +1,10 @@
+.main {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.routed {
+  grid-row: 1/4;
+  grid-column: 2/3;
+}
