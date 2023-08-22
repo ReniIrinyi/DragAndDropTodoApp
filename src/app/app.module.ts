@@ -19,6 +19,18 @@ import { AllComponent } from './components/tasks/all/all.component';
 import { PomodorosComponent } from './components/statistic/pomodoros/pomodoros.component';
 import { TasksComponent } from './components/statistic/tasks/tasks.component';
 import { NewTaskComponent } from './components/new-task/new-task.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { StatisticComponent } from './components/statistic/statistic/statistic.component';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 
 const routes: Routes = [
   { path: 'main', component: TodayComponent },
@@ -48,11 +60,21 @@ const routes: Routes = [
     PomodorosComponent,
     TasksComponent,
     NewTaskComponent,
+    StatisticComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
+    FontAwesomeModule,
+    MatDialogModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatMenuModule,
+    FormsModule,
+    MatFormFieldModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

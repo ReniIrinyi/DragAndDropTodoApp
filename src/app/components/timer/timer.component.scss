@@ -1,0 +1,22 @@
+@import "../../../styles.scss";
+.timer {
+  display: flex;
+  flex-direction: row;
+}
+
+.timer-display {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0.5rem 0 0.5rem;
+}
+.buttons {
+  & fa-icon {
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-left: 0.5rem;
+  }
+
+  & fa-icon:hover {
+    color: $header-buttons-hover;
+  }
+}

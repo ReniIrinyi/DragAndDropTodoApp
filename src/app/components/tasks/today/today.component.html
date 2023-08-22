@@ -1,1 +1,142 @@
-<p>today works!</p>
+<div class="today">
+  <h2>Heute</h2>
+  <div class="tasks">
+    <div class="tasks-duration">
+      <p>3</p>
+      <p>45</p>
+      <p>Voraussichtliche Zeit</p>
+    </div>
+    <div class="tasks-quantity">
+      <p>2</p>
+      <p>Aufgaben zu erledigen</p>
+    </div>
+    <div class="tasks-past-time">
+      <p>25</p>
+      <p>Vergangene Zeit</p>
+    </div>
+  </div>
+  <div class="new-task">
+    <button mat-icon-button (click)="addTask()">
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
+    <input
+      class="input"
+      mat-menu-item
+      [(ngModel)]="newTask.taskName"
+      placeholder="Aufgabe"
+    />
+    <mat-form-field class="datepicker-form">
+      <label>Datum</label>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dueDatePicker"
+        class="datepicker-icon"
+      ></mat-datepicker-toggle>
+      <input
+        class="datepicker-input"
+        matInput
+        [matDatepicker]="dueDatePicker"
+        [(ngModel)]="newTask.dueDate"
+        style="display: none"
+      />
+      <mat-datepicker #dueDatePicker></mat-datepicker>
+      <p>{{ newTask.dueDate | date }}</p>
+    </mat-form-field>
+
+    <div class="buttons">
+      <ng-container *ngIf="newTask.pomodoros > 5; else individualIcons">
+        <span class="pomodoro-count">{{ newTask.pomodoros }} x </span>
+        <fa-icon
+          [icon]="faStopwatch"
+          [ngClass]="{ 'red-icon': newTask.pomodoros >= 1 }"
+        ></fa-icon>
+      </ng-container>
+      <ng-template #individualIcons>
+        <fa-icon
+          [ngClass]="{ 'red-icon': newTask.pomodoros >= 1 }"
+          (click)="togglePomodoro(newTask, 0)"
+          [icon]="faStopwatch"
+        ></fa-icon>
+        <fa-icon
+          [ngClass]="{ 'red-icon': newTask.pomodoros >= 2 }"
+          (click)="togglePomodoro(newTask, 1)"
+          [icon]="faStopwatch"
+        ></fa-icon>
+        <fa-icon
+          [ngClass]="{ 'red-icon': newTask.pomodoros >= 3 }"
+          (click)="togglePomodoro(newTask, 2)"
+          [icon]="faStopwatch"
+        ></fa-icon>
+        <fa-icon
+          [ngClass]="{ 'red-icon': newTask.pomodoros >= 4 }"
+          (click)="togglePomodoro(newTask, 3)"
+          [icon]="faStopwatch"
+        ></fa-icon>
+        <fa-icon
+          [ngClass]="{ 'red-icon': newTask.pomodoros >= 5 }"
+          (click)="togglePomodoro(newTask, 4)"
+          [icon]="faStopwatch"
+        ></fa-icon>
+      </ng-template>
+    </div>
+    <mat-menu #pomodoroMenu="matMenu">
+      <div class="pomodoro-menu-content">
+        <fa-icon [icon]="faStopwatch"></fa-icon>
+        <button
+          mat-menu-item
+          (click)="changePomodoroCount(-1); $event.stopPropagation()"
+        >
+          <fa-icon [icon]="faMinus"></fa-icon>
+        </button>
+        <span class="pomodoro-duration">{{ newTask.pomodoros }}</span>
+        <button
+          mat-menu-item
+          (click)="changePomodoroCount(1); $event.stopPropagation()"
+        >
+          <fa-icon [icon]="faPlus"></fa-icon>
+        </button>
+      </div>
+    </mat-menu>
+
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="pomodoroMenu"
+      aria-label="Pomodoro options"
+    >
+      <fa-icon [icon]="faChevronRight"></fa-icon>
+    </button>
+  </div>
+
+  <!-- <div
+    *ngFor="let task of tasks; let i = index"
+    (click)="selectIndex(i)"
+    class="tasks-list"
+  >
+    <fa-icon [icon]="faCircle" ngClass="icon-fill"></fa-icon>
+    <div class="task-name">{{ task.taskName }}</div>
+    <div class="task-due-date">{{ task.dueDate | date }}</div>
+    <div class="pomodoro-icons">
+      <ng-container *ngIf="task.pomodoros > 5; else individual">
+        <span class="pomodoro-count">{{ task.pomodoros }} x </span>
+        <fa-icon [icon]="faStopwatch"></fa-icon>
+      </ng-container>
+      <ng-template #individual>
+        <fa-icon
+          *ngFor="let i of getIconCount(task.pomodoros)"
+          [icon]="faStopwatch"
+        ></fa-icon>
+      </ng-template>
+    </div>
+  </div> -->
+  <!-- <div *ngIf="selectedIndex" class="task-description">
+    <fa-icon [icon]="faCircle" ngClass="icon-fill"></fa-icon>
+    <div class="task-name">{{ tasks[selectedIndex].name }}</div>
+    <div class="task-due-date">{{ tasks[selectedIndex].dueDate | date }}</div>
+    <div class="pomodoro-icons">
+      <span class="pomodoro-count"
+        >{{ tasks[selectedIndex].pomodoroDuration }} x
+      </span>
+      <fa-icon [icon]="faStopwatch"></fa-icon>
+    </div>
+  </div> -->
+</div>

@@ -1,0 +1,48 @@
+@import "../../../../styles.scss";
+.today {
+  background-color: $sand-light;
+  padding: 1rem;
+
+  div {
+    margin: 1rem;
+    border-radius: 5px;
+    padding: 0.2rem;
+  }
+}
+.tasks {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+}
+
+.new-task {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  background-color: #fff;
+
+  .input {
+    width: 50%;
+  }
+
+  .datepicker-form {
+    width: 20%;
+  }
+}
+
+.red-icon {
+  color: red;
+}
+.tasks-list {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  border-radius: 5px;
+  padding: 0.2rem;
+  background-color: #fff;
+}
+
+.icon-fill {
+  fill: $grey;
+}

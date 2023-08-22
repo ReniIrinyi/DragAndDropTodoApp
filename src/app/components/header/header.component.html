@@ -1,1 +1,9 @@
-<p>header works!</p>
+<div class="header">
+  <div class="header-left">
+    <app-timer></app-timer>
+  </div>
+  <div class="header-right">
+    <fa-icon (click)="openStatistic()" [icon]="faChartLine"></fa-icon>
+    <fa-icon (click)="openSettings()" [icon]="faGear"></fa-icon>
+  </div>
+</div>
