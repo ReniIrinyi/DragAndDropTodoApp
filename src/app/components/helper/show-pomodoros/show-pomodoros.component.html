@@ -1,0 +1,62 @@
+<div class="buttons">
+  <ng-container *ngIf="newTask.pomodoros > 5; else individualIcons">
+    <span class="pomodoro-count">{{ newTask.pomodoros }} x </span>
+    <fa-icon
+      [icon]="faStopwatch"
+      [ngClass]="{ 'red-icon': newTask.pomodoros >= 0 }"
+    ></fa-icon>
+  </ng-container>
+  <ng-template #individualIcons>
+    <fa-icon
+      [ngClass]="{ 'red-icon': newTask.pomodoros >= 1 }"
+      (click)="setPomodoroCount(1)"
+      [icon]="faStopwatch"
+    ></fa-icon>
+    <fa-icon
+      [ngClass]="{ 'red-icon': newTask.pomodoros >= 2 }"
+      (click)="setPomodoroCount(2)"
+      [icon]="faStopwatch"
+    ></fa-icon>
+    <fa-icon
+      [ngClass]="{ 'red-icon': newTask.pomodoros >= 3 }"
+      (click)="setPomodoroCount(3)"
+      [icon]="faStopwatch"
+    ></fa-icon>
+    <fa-icon
+      [ngClass]="{ 'red-icon': newTask.pomodoros >= 4 }"
+      (click)="setPomodoroCount(4)"
+      [icon]="faStopwatch"
+    ></fa-icon>
+    <fa-icon
+      [ngClass]="{ 'red-icon': newTask.pomodoros >= 5 }"
+      (click)="setPomodoroCount(5)"
+      [icon]="faStopwatch"
+    ></fa-icon>
+  </ng-template>
+</div>
+<mat-menu #pomodoroMenu="matMenu">
+  <div class="pomodoro-menu-content">
+    <fa-icon [icon]="faStopwatch"></fa-icon>
+    <button
+      mat-menu-item
+      (click)="changePomodoroCount(-1); $event.stopPropagation()"
+    >
+      <fa-icon [icon]="faMinus"></fa-icon>
+    </button>
+    <span class="pomodoro-duration">{{ newTask.pomodoros }}</span>
+    <button
+      mat-menu-item
+      (click)="changePomodoroCount(1); $event.stopPropagation()"
+    >
+      <fa-icon [icon]="faPlus"></fa-icon>
+    </button>
+  </div>
+</mat-menu>
+
+<button
+  mat-icon-button
+  [matMenuTriggerFor]="pomodoroMenu"
+  aria-label="Pomodoro options"
+>
+  <fa-icon [icon]="faChevronRight"></fa-icon>
+</button>

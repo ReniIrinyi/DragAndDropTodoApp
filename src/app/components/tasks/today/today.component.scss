@@ -2,6 +2,8 @@
 .today {
   background-color: $sand-light;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 
   div {
     margin: 1rem;
@@ -34,7 +36,7 @@
 .red-icon {
   color: red;
 }
-.tasks-list {
+.tasks-list-element {
   display: flex;
   flex-direction: row;
   margin: 1rem;
@@ -42,7 +44,24 @@
   padding: 0.2rem;
   background-color: #fff;
 }
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+}
+.tasks-container--selected {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.task-description {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
 
+  & .task-name {
+    display: flex;
+    flex-direction: row;
+  }
+}
 .icon-fill {
   fill: $grey;
 }

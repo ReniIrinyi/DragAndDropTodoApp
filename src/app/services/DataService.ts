@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as localforage from 'localforage';
 
+export interface Tags {
+  name: string;
+}
 export interface Subtask {
   subtaskId: number;
   subtaskName: string;
@@ -12,20 +15,22 @@ export interface Subtask {
 export interface Task {
   taskId: number;
   projectId: number;
-  taskName: string;
+  name: string;
   dueDate: string;
   pomodoros: number;
   description: string;
   completed: boolean;
   subtasks: Subtask[];
+  tags: Tags[];
 }
 
 export interface Project {
   projectId: number;
-  projectName: string;
+  name: string;
   tasks: Task[];
   completed: boolean;
   pomodoros: number;
+  tags: Tags[];
 }
 
 @Injectable({
@@ -107,6 +112,41 @@ export class DataService {
       throw error;
     }
   }
+
+  async updateProject(updatedProject: Project): Promise<void> {
+    try {
+      const projects = await this.getAllProjects();
+      const index = projects.findIndex(
+        (project) => project.projectId === updatedProject.projectId
+      );
+
+      if (index !== -1) {
+        projects[index] = updatedProject;
+        await this.projects.setItem('projects', projects);
+      }
+    } catch (error) {
+      console.error('Error updating project:', error);
+      throw error;
+    }
+  }
+  async updateTask(updatedTask: Task): Promise<void> {
+    try {
+      const tasks = await this.getAllTasks();
+      const index = tasks.findIndex(
+        (task) => task.taskId === updatedTask.taskId
+      );
+
+      if (index !== -1) {
+        tasks[index] = updatedTask;
+        await this.tasks.setItem('tasks', tasks);
+        console.log(updatedTask.tags);
+      }
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw error;
+    }
+  }
+
   async getAllProjects(): Promise<Project[]> {
     try {
       const projects = await this.projects.getItem<Project[]>('projects');
@@ -184,6 +224,35 @@ export class DataService {
       }
     } catch (error) {
       console.error('Error updating pomodoros:', error);
+      throw error;
+    }
+  }
+
+  async getAllTags(): Promise<Tags[]> {
+    try {
+      const allTasks = await this.getAllTasks();
+      const allProjects = await this.getAllProjects();
+      const allTags: Tags[] = [];
+
+      allTasks.forEach((task) => {
+        task.tags.forEach((tag) => {
+          if (!allTags.some((existingTag) => existingTag.name === tag.name)) {
+            allTags.push(tag);
+          }
+        });
+      });
+
+      allProjects.forEach((project) => {
+        project.tags.forEach((tag) => {
+          if (!allTags.some((existingTag) => existingTag.name === tag.name)) {
+            allTags.push(tag);
+          }
+        });
+      });
+
+      return allTags;
+    } catch (error) {
+      console.error('Error loading tags:', error);
       throw error;
     }
   }

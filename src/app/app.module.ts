@@ -21,9 +21,8 @@ import { TasksComponent } from './components/statistic/tasks/tasks.component';
 import { NewTaskComponent } from './components/new-task/new-task.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StatisticComponent } from './components/statistic/statistic/statistic.component';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -31,6 +30,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+import { NgFor } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { LabelComponent } from './components/helper/label/label.component';
+import { ShowPomodorosComponent } from './components/helper/show-pomodoros/show-pomodoros.component';
 
 const routes: Routes = [
   { path: 'main', component: TodayComponent },
@@ -61,6 +65,8 @@ const routes: Routes = [
     TasksComponent,
     NewTaskComponent,
     StatisticComponent,
+    LabelComponent,
+    ShowPomodorosComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +81,10 @@ const routes: Routes = [
     MatMenuModule,
     FormsModule,
     MatFormFieldModule,
+    MatPaginatorModule,
+    MatChipsModule,
+    MatIconModule,
+    NgFor,
   ],
   providers: [],
   bootstrap: [AppComponent],

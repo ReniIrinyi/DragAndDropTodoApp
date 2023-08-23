@@ -1,0 +1,24 @@
+<mat-form-field class="example-chip-list">
+  <mat-label>Add Label</mat-label>
+  <mat-chip-grid #chipGrid aria-label="Label hinzufügen">
+    <mat-chip-row
+      *ngFor="let tag of selectedElement?.tags"
+      (removed)="remove(tag)"
+      [editable]="true"
+      (edited)="edit(tag, $event)"
+      [aria-description]="'press enter to edit ' + tag.name"
+    >
+      {{ tag.name }}
+      <button matChipRemove [attr.aria-label]="'remove ' + tag.name">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip-row>
+    <input
+      placeholder="neue Label"
+      [matChipInputFor]="chipGrid"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      [matChipInputAddOnBlur]="addOnBlur"
+      (matChipInputTokenEnd)="add($event)"
+    />
+  </mat-chip-grid>
+</mat-form-field>

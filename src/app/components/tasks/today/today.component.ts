@@ -14,14 +14,19 @@ import {
   Project,
   Subtask,
 } from 'src/app/services/DataService';
-
+import { SelectedElementService } from 'src/app/services/SelectedElementservice';
+import { NewObjectService } from 'src/app/services/NewObjectService';
 @Component({
   selector: 'app-today',
   templateUrl: './today.component.html',
   styleUrls: ['./today.component.scss'],
 })
 export class TodayComponent implements OnInit {
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    private selectedElementService: SelectedElementService,
+    private newObjectService: NewObjectService
+  ) {}
 
   @ViewChild(MatMenuTrigger) pomodoroMenuTrigger!: MatMenuTrigger;
 
@@ -34,24 +39,26 @@ export class TodayComponent implements OnInit {
 
   newProject: Project = {
     projectId: 0,
-    projectName: '',
+    name: '',
     completed: false,
     tasks: [],
     pomodoros: 0,
+    tags: [],
   };
 
   newTask: Task = {
     projectId: 0,
     taskId: 0,
-    taskName: '',
+    name: '',
     dueDate: '',
     pomodoros: 0,
     description: '',
     completed: false,
     subtasks: [],
+    tags: [],
   };
 
-  newBubtask: Subtask = {
+  newSubtask: Subtask = {
     subtaskId: 0,
     subtaskName: '',
     description: '',
@@ -59,10 +66,14 @@ export class TodayComponent implements OnInit {
     pomodoros: 0,
   };
 
-  selectedDate: Date | null = null;
-  selectedIndex: number | undefined;
-
   tasksObject: Task[] = [];
+  projectsObject: Project[] = [];
+  subtasksObject: Subtask[] = [];
+
+  pagedTasks: Task[] = [];
+  selectedElement: Task | Project | undefined;
+  pageIndex: number = 0;
+  itemsPerPage = 5;
 
   ngOnInit() {
     // this.dataService.clearDatabase();
@@ -73,16 +84,22 @@ export class TodayComponent implements OnInit {
   async loadDbData() {
     try {
       this.tasksObject = await this.dataService.getAllTasks();
+      this.projectsObject = await this.dataService.getAllProjects();
+
+      this.setPage(0, this.itemsPerPage);
       console.log('Tasks:', this.tasksObject);
     } catch (error) {
       console.error('Error loading data:', error);
     }
   }
 
+  updateNewTask(newTask: Task) {
+    this.newTask = newTask;
+  }
   async addTask() {
-    if (this.newTask.taskName.trim() !== '') {
+    if (this.newTask.name.trim() !== '') {
       try {
-        await this.dataService.addTask(this.newTask);
+        await this.newObjectService.addTask(this.newTask);
         console.log('Added task:', this.newTask);
         this.loadDbData();
       } catch (error) {
@@ -91,29 +108,35 @@ export class TodayComponent implements OnInit {
     }
   }
 
-  updateSelectedDate(selectedDate: Date): void {
-    this.selectedDate = selectedDate;
-  }
-
-  selectIndex(i: number) {
-    this.selectedIndex = i;
-  }
-
-  addPomodoros(object: string, task: Task, taskId: number) {
-    task.pomodoros++;
-    this.dataService.updatePomodoros(object, taskId, task.pomodoros);
-  }
-
-  changePomodoroCount(change: number) {
-    const newCount = this.newTask.pomodoros + change;
-    if (newCount >= 1) {
-      this.newTask.pomodoros = newCount;
+  async getSubTask(taskId: number) {
+    try {
+      return await this.dataService.getSubtasks(taskId);
+    } catch (error) {
+      console.log('Error fetching data', error);
+      throw error;
     }
   }
 
-  getIconCount(count: number): number[] {
-    return Array.from({ length: count }, (_, index) => index);
+  handleTaskClick(element: HTMLElement, index: number) {
+    console.log(index);
+    this.tasksObject.find((el) => {
+      if (el.taskId - 1 == index) {
+        this.selectedElementService.setSelectedElement(el);
+        this.selectedElement = this.selectedElementService.getSelectedElement();
+        element.classList.add('tasks-container--selected');
+      }
+    });
   }
 
-  togglePomodoro(task: Task, index: number) {}
+  handlePageChange(event: any, itemsPerPage: number) {
+    this.setPage(event.pageIndex, itemsPerPage);
+  }
+
+  setPage(pageIndex: number, itemsPerPage: number) {
+    const startIndex = pageIndex * itemsPerPage;
+    this.pagedTasks = this.tasksObject.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
+  }
 }
