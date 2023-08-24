@@ -8,7 +8,7 @@ import { Task, Project, Subtask } from './DataService';
 })
 export class NewObjectService {
   private newProjectSubject = new BehaviorSubject<Project>({
-    projectId: 0,
+    id: 0,
     name: '',
     completed: false,
     tasks: [],
@@ -18,7 +18,7 @@ export class NewObjectService {
 
   private newTaskSubject = new BehaviorSubject<Task>({
     projectId: 0,
-    taskId: 0,
+    id: 0,
     name: '',
     dueDate: '',
     pomodoros: 0,
@@ -29,7 +29,7 @@ export class NewObjectService {
   });
 
   private newSubtaskSubject = new BehaviorSubject<Subtask>({
-    subtaskId: 0,
+    id: 0,
     subtaskName: '',
     description: '',
     completed: false,

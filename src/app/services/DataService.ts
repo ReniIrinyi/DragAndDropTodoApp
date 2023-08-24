@@ -5,7 +5,7 @@ export interface Tags {
   name: string;
 }
 export interface Subtask {
-  subtaskId: number;
+  id: number;
   subtaskName: string;
   description: string;
   completed: boolean;
@@ -13,7 +13,7 @@ export interface Subtask {
 }
 
 export interface Task {
-  taskId: number;
+  id: number;
   projectId: number;
   name: string;
   dueDate: string;
@@ -25,7 +25,7 @@ export interface Task {
 }
 
 export interface Project {
-  projectId: number;
+  id: number;
   name: string;
   tasks: Task[];
   completed: boolean;
@@ -101,7 +101,7 @@ export class DataService {
 
   async addTask(taskObject: Task): Promise<void> {
     try {
-      taskObject.taskId = this.taskIdCounter;
+      taskObject.id = this.taskIdCounter;
       this.taskIdCounter++;
       const tasks = await this.getAllTasks();
       tasks.push(taskObject);
@@ -117,7 +117,7 @@ export class DataService {
     try {
       const projects = await this.getAllProjects();
       const index = projects.findIndex(
-        (project) => project.projectId === updatedProject.projectId
+        (project) => project.id === updatedProject.id
       );
 
       if (index !== -1) {
@@ -132,9 +132,7 @@ export class DataService {
   async updateTask(updatedTask: Task): Promise<void> {
     try {
       const tasks = await this.getAllTasks();
-      const index = tasks.findIndex(
-        (task) => task.taskId === updatedTask.taskId
-      );
+      const index = tasks.findIndex((task) => task.id === updatedTask.id);
 
       if (index !== -1) {
         tasks[index] = updatedTask;
@@ -159,7 +157,7 @@ export class DataService {
 
   async addProject(projectObject: Project): Promise<void> {
     try {
-      projectObject.projectId = this.projectIdCounter;
+      projectObject.id = this.projectIdCounter;
       this.projectIdCounter++;
       const projects = await this.getAllProjects();
       projects.push(projectObject);
@@ -174,7 +172,7 @@ export class DataService {
   async getSubtasks(taskId: number): Promise<Subtask[]> {
     try {
       const tasks = await this.getAllTasks();
-      const task = tasks.find((task) => task.taskId === taskId);
+      const task = tasks.find((task) => task.id === taskId);
       return task?.subtasks || [];
     } catch (error) {
       console.error('Error loading subtasks:', error);
@@ -182,15 +180,23 @@ export class DataService {
     }
   }
 
-  async addSubtasks(taskId: number, subtasks: Subtask[]): Promise<void> {
+  async addSubtasks(id: number, subtasks: Subtask[]): Promise<void> {
     try {
       const tasks = await this.getAllTasks();
-      const taskIndex = tasks.findIndex((task) => task.taskId === taskId);
+      const taskIndex = tasks.findIndex((task) => task.id === id);
       if (taskIndex !== -1) {
         tasks[taskIndex].subtasks.push(...subtasks);
         await this.updateCounters();
         await this.tasks.setItem('tasks', tasks);
       }
+    } catch (error) {
+      console.error('Error adding subtasks:', error);
+      throw error;
+    }
+  }
+
+  async updateSubtask(id: number, subtasks: Subtask[]): Promise<void> {
+    try {
     } catch (error) {
       console.error('Error adding subtasks:', error);
       throw error;
@@ -206,7 +212,7 @@ export class DataService {
       if (object == 'task') {
         const tasks = await this.getAllTasks();
         const updatedTasks = tasks.map((task: Task) => {
-          if (task.taskId == id) {
+          if (task.id == id) {
             task.pomodoros = pomodoros;
           }
           return task;
@@ -215,7 +221,7 @@ export class DataService {
       } else if (object == 'project') {
         const projects = await this.getAllProjects();
         const updatedProjects = projects.map((project: Project) => {
-          if (project.projectId === id) {
+          if (project.id === id) {
             project.pomodoros = pomodoros;
           }
           return project;

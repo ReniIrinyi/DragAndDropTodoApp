@@ -1,0 +1,24 @@
+<div class="task-list">
+  <div
+    *ngFor="let task of pagedTasks; let i = index"
+    (click)="handleClick(container, i)"
+    class="tasks-list-element"
+  >
+    <fa-icon [icon]="faCircle" ngClass="icon-fill"></fa-icon>
+    <div class="task-name">{{ task.name }}</div>
+    <div class="task-due-date">{{ task.dueDate | date }}</div>
+    <div class="pomodoro-icons">
+      <ng-container *ngIf="task.pomodoros > 5; else individual">
+        <span class="pomodoro-count">{{ task.pomodoros }} x </span>
+        <fa-icon [icon]="faStopwatch"></fa-icon>
+      </ng-container>
+      <ng-template #individual>
+        <fa-icon
+          *ngFor="let _ of [].constructor(task.pomodoros)"
+          [icon]="faStopwatch"
+        ></fa-icon>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<app-selected-task [selectedElement]="selectedElement"></app-selected-task>

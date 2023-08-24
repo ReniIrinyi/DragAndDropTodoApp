@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainComponent } from './components/main/main.component';
 import { MenuComponent } from './components/menu/menu.component';
-import { TimerComponent } from './components/timer/timer.component';
-import { CalenderComponent } from './components/calender/calender.component';
+import { TimerComponent } from './components/helper/timer/timer.component';
+import { CalenderComponent } from './components/helper/calender/calender.component';
 import { ProjectsMenuComponent } from './components/projects-menu/projects-menu.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -18,7 +18,6 @@ import { DoneComponent } from './components/tasks/done/done.component';
 import { AllComponent } from './components/tasks/all/all.component';
 import { PomodorosComponent } from './components/statistic/pomodoros/pomodoros.component';
 import { TasksComponent } from './components/statistic/tasks/tasks.component';
-import { NewTaskComponent } from './components/new-task/new-task.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { StatisticComponent } from './components/statistic/statistic/statistic.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,6 +34,9 @@ import { NgFor } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { LabelComponent } from './components/helper/label/label.component';
 import { ShowPomodorosComponent } from './components/helper/show-pomodoros/show-pomodoros.component';
+import { TaskListComponent } from './components/tasks/task-list/task-list.component';
+import { NewTaskComponent } from './components/tasks/new-task/new-task.component';
+import { SelectedTaskComponent } from './components/tasks/selected-task/selected-task.component';
 
 const routes: Routes = [
   { path: 'main', component: TodayComponent },
@@ -67,6 +69,8 @@ const routes: Routes = [
     StatisticComponent,
     LabelComponent,
     ShowPomodorosComponent,
+    TaskListComponent,
+    SelectedTaskComponent,
   ],
   imports: [
     BrowserModule,

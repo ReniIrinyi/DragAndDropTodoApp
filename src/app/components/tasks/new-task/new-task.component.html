@@ -1,0 +1,32 @@
+<div class="new-task">
+  <button mat-icon-button (click)="addTask()">
+    <fa-icon [icon]="faPlus"></fa-icon>
+  </button>
+  <input
+    class="input"
+    mat-menu-item
+    [(ngModel)]="newTask.name"
+    placeholder="Aufgabe"
+  />
+  <mat-form-field class="datepicker-form">
+    <label>Datum</label>
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="dueDatePicker"
+      class="datepicker-icon"
+    ></mat-datepicker-toggle>
+    <input
+      class="datepicker-input"
+      matInput
+      [matDatepicker]="dueDatePicker"
+      [(ngModel)]="newTask.dueDate"
+      style="display: none"
+    />
+    <mat-datepicker #dueDatePicker></mat-datepicker>
+    <p>{{ newTask.dueDate | date }}</p>
+  </mat-form-field>
+  <app-show-pomodoros
+    [newTask]="newTask"
+    (newTaskUpdated)="updateNewTask($event)"
+  ></app-show-pomodoros>
+</div>

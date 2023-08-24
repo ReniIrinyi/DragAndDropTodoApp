@@ -21,9 +21,9 @@ export class SelectedElementService {
   async saveSelectedElementChanges(): Promise<void> {
     if (this.selectedElement) {
       try {
-        if ('taskId' in this.selectedElement) {
+        if ('projectId' in this.selectedElement) {
           await this.dataService.updateTask(this.selectedElement);
-        } else if ('projectId' in this.selectedElement) {
+        } else {
           await this.dataService.updateProject(this.selectedElement);
         }
       } catch (error) {

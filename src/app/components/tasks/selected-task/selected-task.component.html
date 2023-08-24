@@ -1,0 +1,14 @@
+<div *ngIf="selectedElement" class="task-description">
+  <div class="description-header">
+    <div class="task-name">
+      <fa-icon [icon]="faCircle" ngClass="icon-fill"></fa-icon>
+      <p>{{ selectedElement.name }}</p>
+      <app-timer></app-timer>
+    </div>
+    <app-label></app-label>
+  </div>
+  <div class="pomodoro-icons">
+    <span class="pomodoro-count">{{ selectedElement.pomodoros }} x </span>
+    <fa-icon [icon]="faStopwatch"></fa-icon>
+  </div>
+</div>

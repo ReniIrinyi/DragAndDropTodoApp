@@ -1,0 +1,10 @@
+.task-description {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+
+  & .task-name {
+    display: flex;
+    flex-direction: row;
+  }
+}

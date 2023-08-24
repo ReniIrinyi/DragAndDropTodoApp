@@ -15,76 +15,12 @@
       <p>Vergangene Zeit</p>
     </div>
   </div>
-  <div class="new-task">
-    <button mat-icon-button (click)="addTask()">
-      <fa-icon [icon]="faPlus"></fa-icon>
-    </button>
-    <input
-      class="input"
-      mat-menu-item
-      [(ngModel)]="newTask.name"
-      placeholder="Aufgabe"
-    />
-    <mat-form-field class="datepicker-form">
-      <label>Datum</label>
-      <mat-datepicker-toggle
-        matSuffix
-        [for]="dueDatePicker"
-        class="datepicker-icon"
-      ></mat-datepicker-toggle>
-      <input
-        class="datepicker-input"
-        matInput
-        [matDatepicker]="dueDatePicker"
-        [(ngModel)]="newTask.dueDate"
-        style="display: none"
-      />
-      <mat-datepicker #dueDatePicker></mat-datepicker>
-      <p>{{ newTask.dueDate | date }}</p>
-    </mat-form-field>
-    <app-show-pomodoros
-      [newTask]="newTask"
-      (newTaskUpdated)="updateNewTask($event)"
-    ></app-show-pomodoros>
-  </div>
-  <div class="tasks-container" #taskscontainer>
-    <div class="task-list">
-      <div
-        *ngFor="let task of pagedTasks; let i = index"
-        (click)="handleTaskClick(taskscontainer, i)"
-        class="tasks-list-element"
-      >
-        <fa-icon [icon]="faCircle" ngClass="icon-fill"></fa-icon>
-        <div class="task-name">{{ task.name }}</div>
-        <div class="task-due-date">{{ task.dueDate | date }}</div>
-        <div class="pomodoro-icons">
-          <ng-container *ngIf="task.pomodoros > 5; else individual">
-            <span class="pomodoro-count">{{ task.pomodoros }} x </span>
-            <fa-icon [icon]="faStopwatch"></fa-icon>
-          </ng-container>
-          <ng-template #individual>
-            <fa-icon
-              *ngFor="let _ of [].constructor(task.pomodoros)"
-              [icon]="faStopwatch"
-            ></fa-icon>
-          </ng-template>
-        </div>
-      </div>
-    </div>
-    <div *ngIf="selectedElement" class="task-description">
-      <div class="description-header">
-        <div class="task-name">
-          <fa-icon [icon]="faCircle" ngClass="icon-fill"></fa-icon>
-          <p>{{ selectedElement.name }}</p>
-          <app-timer></app-timer>
-        </div>
-        <app-label></app-label>
-      </div>
-      <div class="pomodoro-icons">
-        <span class="pomodoro-count">{{ selectedElement.pomodoros }} x </span>
-        <fa-icon [icon]="faStopwatch"></fa-icon>
-      </div>
-    </div>
+  <app-new-task></app-new-task>
+  <div class="tasks-container" #container>
+    <app-task-list
+      [pagedTasks]="pagedTasks"
+      [container]="container"
+    ></app-task-list>
   </div>
   <mat-paginator
     #paginator

@@ -15,7 +15,7 @@ import { Task } from 'src/app/services/DataService';
 export class ShowPomodorosComponent implements OnInit {
   @Input() newTask: Task = {
     projectId: 0,
-    taskId: 0,
+    id: 0,
     name: '',
     dueDate: '',
     pomodoros: 0,

@@ -1,0 +1,15 @@
+.new-task {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  background-color: #fff;
+
+  .input {
+    width: 50%;
+  }
+
+  .datepicker-form {
+    width: 20%;
+  }
+}

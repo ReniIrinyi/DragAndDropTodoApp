@@ -17,33 +17,6 @@
   background-color: #fff;
 }
 
-.new-task {
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  align-items: center;
-  background-color: #fff;
-
-  .input {
-    width: 50%;
-  }
-
-  .datepicker-form {
-    width: 20%;
-  }
-}
-
-.red-icon {
-  color: red;
-}
-.tasks-list-element {
-  display: flex;
-  flex-direction: row;
-  margin: 1rem;
-  border-radius: 5px;
-  padding: 0.2rem;
-  background-color: #fff;
-}
 .tasks-container {
   display: flex;
   flex-direction: column;
@@ -52,16 +25,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-.task-description {
-  display: flex;
-  flex-direction: column;
-  background-color: #fff;
 
-  & .task-name {
-    display: flex;
-    flex-direction: row;
-  }
-}
 .icon-fill {
   fill: $grey;
 }
